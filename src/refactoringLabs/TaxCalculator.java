@@ -6,35 +6,6 @@ import java.text.DecimalFormat;
 
 public class TaxCalculator {
 
-	// social taxes
-	public static double pension = 0; // 9,76% of the income
-	public static double disabled = 0; // 1,5% of the income
-	public static double illness = 0; // 2,45% of the income
-
-	private final static double PENSION = 0.0976;
-	private final static double DISABLED = 0.015;
-	private final static double ILLNESS = 0.02456;
-
-
-	// health taxes
-	public static double incomeCost = 111.25;
-	public static double health1 = 0; // 9% of the incomeCost
-	public static double health2 = 0; // 7,75 % of the incomeCost
-	public static double advanceTax = 0; // income tax (18%) advance
-	public static double exemptedValue = 46.33; // reduced value 46,33 PLN
-	public static double advanceTaxOffice = 0;
-	public static double advanceTaxOffice0 = 0;
-
-	private static final double INCOME_COST = 111.25;
-	private static final double HEALTH1 = 0.09;
-	private static final double HEALTH2 = 0.0775;
-	private static final double ADVANCE_TAX = 0.18;
-	private static final double EXEMPTED_VALUE = 46.33;
-
-	private final static DecimalFormat df00 = new DecimalFormat("#.00");
-	private final static DecimalFormat df = new DecimalFormat("#");
-
-
 	public static void main(String[] args) {
 
 		ContractType contractType = null;

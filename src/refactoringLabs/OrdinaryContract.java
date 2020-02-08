@@ -29,7 +29,7 @@ public class OrdinaryContract extends Contract {
                "Disability tax basis " + df00.format(calculateDisabled(income)) + "\n" +
                "Illness insurance basis " + df00.format(calculateIllness(income)) + "\n" +
                "Health insurance basis: " + healthInsuranceBasis + "\n" +
-               "Health insutance: 9% = " + df00.format(calculateHealthInsurance1(income)) + " 7,75% = " + df00.format(calculateHealthInsurance2(income)) + "\n" +
+               "Health insurance: 9% = " + df00.format(calculateHealthInsurance1(income)) + " 7,75% = " + df00.format(calculateHealthInsurance2(income)) + "\n" +
                "Constant income tax cost " + INCOME_COST + "\n" +
                "Tax basis " + taxBasis + " rounded " + df.format(taxBasis0) + "\n" +
                "Advance for income tax 18 % = " + advanceTax + "\n" +
