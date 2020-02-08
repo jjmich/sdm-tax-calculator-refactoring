@@ -7,9 +7,9 @@ import java.text.DecimalFormat;
 public class TaxCalculator {
 
 	// social taxes
-	public static double t_pension = 0; // 9,76% of the income
-	public static double t_disabled = 0; // 1,5% of the income
-	public static double s_illness = 0; // 2,45% of the income
+	public static double pension = 0; // 9,76% of the income
+	public static double disabled = 0; // 1,5% of the income
+	public static double illness = 0; // 2,45% of the income
 
 	private final static double PENSION = 0.0976;
 	private final static double DISABLED = 0.015;
@@ -18,8 +18,8 @@ public class TaxCalculator {
 
 	// health taxes
 	public static double incomeCost = 111.25;
-	public static double t_health1 = 0; // 9% of the incomeCost
-	public static double t_health2 = 0; // 7,75 % of the incomeCost
+	public static double health1 = 0; // 9% of the incomeCost
+	public static double health2 = 0; // 7,75 % of the incomeCost
 	public static double advanceTax = 0; // income tax (18%) advance
 	public static double exemptedValue = 46.33; // reduced value 46,33 PLN
 	public static double advanceTaxOffice = 0;
@@ -54,89 +54,96 @@ public class TaxCalculator {
 			System.err.println(ex);
 			return;
 		}
-		switch(contractType){
-			case ORDINARY:
-			{
-				double cBasis = calculatedBasis(income);
-				calculateInsurance(cBasis);
-				double taxBasis = cBasis - incomeCost;
-				double taxBasis0 = Double.parseDouble(df.format(taxBasis));
-				double basis = calculateBasis(taxBasis0);
-				double exemtedTax = advanceTax - exemptedValue;
-				double advance = calculateAdvance();
-				advanceTaxOffice0 = Double.parseDouble(df.format(advanceTaxOffice));
-				double salary = income - ((t_pension + t_disabled + s_illness) + t_health1 + advanceTaxOffice0);
 
-				System.out.println(
-						"Ordinary contract" +
-								"basis for taxes " + income +
-								"Pension tax basis " + df00.format(t_pension) +
-								"Disability tax basis " + df00.format(t_disabled) +
-								"Illness insurance basis " + df00.format(s_illness) +
-								"Health insurance basis: " + cBasis +
-								"Health insutance: 9% = " + df00.format(t_health1) + " 7,75% = " + df00.format(t_health2) +
-								"Constant income tax cost " + incomeCost +
-								"Tax basis " + taxBasis + " rounded " + df.format(taxBasis0) +
-								"Advance for income tax 18 % = " + advanceTax +
-								"Exempted value = " + exemptedValue +
-								"Exempted tax = " + df00.format(exemtedTax) +
-								"Advance for the tax office = " + df00.format(advanceTaxOffice) + " rounded = " + df.format(advanceTaxOffice0) +
-								"\n" +
-								"Net salary = " + df00.format(salary)
-						);
-				break;
-			}
-			case CIVIL: {
-				double oBasis = calculatedBasis(income);
-				calculateInsurance(oBasis);
-				exemptedValue = 0;
-				incomeCost = oBasis * 0.2;
-				double basisTax = oBasis - incomeCost;
-				double basisTax0 = Double.parseDouble(df.format(basisTax));
-				double basis = calculateBasis(basisTax0);
-				double taxTaken = advanceTax;
-				double advance = calculateAdvance();
-				advanceTaxOffice0 = Double.parseDouble(df.format(advanceTaxOffice));
-				double salary = income - ((t_pension + t_disabled + s_illness) + t_health1 + advanceTaxOffice0);
+		Contract contract = ContractFactory.getContract(contractType, income);
 
-				System.out.println(
-						"Basis for taxes " + income +
-								"Pension tax " + df00.format(t_pension) +
-								"Disability tax " + df00.format(t_disabled) +
-								"Illness insurance tax " + df00.format(s_illness) +
-								"Basis for the health tax: " + oBasis +
-								"Health tax: 9% = " + df00.format(t_health1) + " 7,75% = " + df00.format(t_health2) +
-								"Income tax cost (constant) " + incomeCost +
-								"Basis tax " + basisTax + " rounded " + df.format(basisTax0) +
-								"Advance for income tax 18 % = " + advanceTax +
-								"Tax taken = " + df00.format(taxTaken) +
-								"Advance for tax office = " + df00.format(advanceTaxOffice) + " rounded = " + df.format(advanceTaxOffice0) +
-								"\n" +
-								"Net salary = " + df00.format(salary)
-						);
-				break;
-			}
-			default: {
-				System.out.println("Unknown contract!");
-				break;
-			}
+		if (contract != null){
+			System.out.println(contract.createSummary());
 		}
+
+//		switch(contractType){
+//			case ORDINARY:
+//			{
+//				double cBasis = calculatedBasis(income);
+//				calculateInsurance(cBasis);
+//				double taxBasis = cBasis - incomeCost;
+//				double taxBasis0 = Double.parseDouble(df.format(taxBasis));
+//				double basis = calculateBasis(taxBasis0);
+//				double exemtedTax = advanceTax - exemptedValue;
+//				double advance = calculateAdvance();
+//				advanceTaxOffice0 = Double.parseDouble(df.format(advanceTaxOffice));
+//				double salary = income - ((pension + disabled + illness) + health1 + advanceTaxOffice0);
+//
+//				System.out.println(
+//						"Ordinary contract" +
+//								"basis for taxes " + income +
+//								"Pension tax basis " + df00.format(pension) +
+//								"Disability tax basis " + df00.format(disabled) +
+//								"Illness insurance basis " + df00.format(illness) +
+//								"Health insurance basis: " + cBasis +
+//								"Health insutance: 9% = " + df00.format(health1) + " 7,75% = " + df00.format(health2) +
+//								"Constant income tax cost " + incomeCost +
+//								"Tax basis " + taxBasis + " rounded " + df.format(taxBasis0) +
+//								"Advance for income tax 18 % = " + advanceTax +
+//								"Exempted value = " + exemptedValue +
+//								"Exempted tax = " + df00.format(exemtedTax) +
+//								"Advance for the tax office = " + df00.format(advanceTaxOffice) + " rounded = " + df.format(advanceTaxOffice0) +
+//								"\n" +
+//								"Net salary = " + df00.format(salary)
+//						);
+//				break;
+//			}
+//			case CIVIL: {
+//				double oBasis = calculatedBasis(income);
+//				calculateInsurance(oBasis);
+//				exemptedValue = 0;
+//				incomeCost = oBasis * 0.2;
+//				double basisTax = oBasis - incomeCost;
+//				double basisTax0 = Double.parseDouble(df.format(basisTax));
+//				double basis = calculateBasis(basisTax0);
+//				double taxTaken = advanceTax;
+//				double advance = calculateAdvance();
+//				advanceTaxOffice0 = Double.parseDouble(df.format(advanceTaxOffice));
+//				double salary = income - ((pension + disabled + illness) + health1 + advanceTaxOffice0);
+//
+//				System.out.println(
+//						"Basis for taxes " + income +
+//								"Pension tax " + df00.format(pension) +
+//								"Disability tax " + df00.format(disabled) +
+//								"Illness insurance tax " + df00.format(illness) +
+//								"Basis for the health tax: " + oBasis +
+//								"Health tax: 9% = " + df00.format(health1) + " 7,75% = " + df00.format(health2) +
+//								"Income tax cost (constant) " + incomeCost +
+//								"Basis tax " + basisTax + " rounded " + df.format(basisTax0) +
+//								"Advance for income tax 18 % = " + advanceTax +
+//								"Tax taken = " + df00.format(taxTaken) +
+//								"Advance for tax office = " + df00.format(advanceTaxOffice) + " rounded = " + df.format(advanceTaxOffice0) +
+//								"\n" +
+//								"Net salary = " + df00.format(salary)
+//						);
+//				break;
+//			}
+//			default: {
+//				System.out.println("Unknown contract!");
+//				break;
+//			}
+//		}
 	}
 
-	public static double calculateAdvance() {
-		return ADVANCE_TAX - HEALTH2 - EXEMPTED_VALUE;
-	}
-
-	public static double calculateBasis(double basis) {
-		return basis * ADVANCE_TAX;
-	}
-
-	public static double calculatedBasis(double basis) {
-		return basis * (1 - PENSION - DISABLED - ILLNESS);
-	}
-
-	public static void calculateInsurance(double basis) {
-		t_health1 = (basis * 9) / 100;
-		t_health2 = (basis * 7.75) / 100;
-	}
+//	public static double calculateAdvance() {
+//		return ADVANCE_TAX - health2 - EXEMPTED_VALUE;
+//	}
+//
+//	public static double calculateBasis(double basis) {
+//		return basis * ADVANCE_TAX;
+//	}
+//
+//	public static double calculatedBasis(double basis) {
+//		return basis * (1 - PENSION - DISABLED - ILLNESS);
+//	}
+//
+//	public static void calculateInsurance(double basis) {
+//		health1 = (basis * 9) / 100;
+//		health2 = (basis * 7.75) / 100;
+//	}
 }
