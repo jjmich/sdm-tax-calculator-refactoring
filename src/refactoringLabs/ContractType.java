@@ -3,7 +3,7 @@ package refactoringLabs;
 public enum ContractType {
 	ORDINARY, CIVIL;
 
-	private ContractType(){}
+	ContractType(){}
 
 	public static ContractType fromChar(char ch) throws Exception{
 		switch(ch){

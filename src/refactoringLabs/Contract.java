@@ -1,60 +1,67 @@
 package refactoringLabs;
 
-import java.text.DecimalFormat;
-
 public abstract class Contract {
 
-    protected final static double PENSION = 0.0976;
-    protected final static double DISABLED = 0.015;
-    protected final static double ILLNESS = 0.02456;
+    private static final double PENSION = 0.0976;
+    private static final double DISABLED = 0.015;
+    private static final double ILLNESS = 0.02456;
+    private static final double HEALTH1 = 0.09;
+    private static final double HEALTH2 = 0.0775;
+    private static final double ADVANCE_TAX = 0.18;
 
-    protected static final double INCOME_COST = 111.25;
-    protected static final double HEALTH1 = 0.09;
-    protected static final double HEALTH2 = 0.0775;
-    protected static final double ADVANCE_TAX = 0.18;
-    protected static final double EXEMPTED_VALUE = 46.33;
+    static final double INCOME_COST = 111.25;
+    static final double EXEMPTED_VALUE = 46.33;
 
-    protected static final DecimalFormat df00 = new DecimalFormat("#.00");
-    protected static final DecimalFormat df = new DecimalFormat("#");
+    String contractType;
+    double pensionTax;
+    double disabilityTax;
+    double illnessInsuranceTax;
+    double healthInsuranceBasis;
+    double healthInsurance1;
+    double healthInsurance2;
+    double incomeCost;
+    double taxBasis;
+    double advanceTax;
+    double exemptedTax;
+    double advanceTaxOffice;
+    double salary;
+    double income;
 
-    protected double income;
-
-    public Contract(double income){
+    Contract(double income){
         this.income = income;
     }
 
-    protected abstract String createSummary();
+    protected abstract Contract createSummary();
 
-    protected double calculateAdvanceTax(double basis){
+    double calculateAdvanceTax(double basis){
         return basis * ADVANCE_TAX;
     }
 
-    protected double calculateHealthInsurance1(double basis){
+    double calculateHealthInsurance1(double basis){
         return basis * HEALTH1;
     }
 
-    protected double calculateHealthInsurance2(double basis){
+    double calculateHealthInsurance2(double basis){
         return basis * HEALTH2;
     }
 
-    protected double calculatePension(double basis){
+    double calculatePension(double basis){
         return basis * PENSION;
     }
 
-    protected double calculateDisabled(double basis){
+    double calculateDisabled(double basis){
         return basis * DISABLED;
     }
 
-    protected double calculateIllness(double basis){
+    double calculateIllness(double basis){
         return  basis * ILLNESS;
     }
 
-    protected double calculateHealthInsuranceBasis(double basis){
+    double calculateHealthInsuranceBasis(double basis){
         return basis - calculatePension(basis) - calculateDisabled(basis) - calculateIllness(basis);
     }
 
-    protected double calculateAdvanceTaxOffice(double basis, double exemptedValue){
+    double calculateAdvanceTaxOffice(double basis, double exemptedValue){
         return calculateAdvanceTax(basis) - calculateHealthInsurance2(basis) - exemptedValue;
     }
-
 }
