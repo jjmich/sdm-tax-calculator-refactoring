@@ -1,5 +1,9 @@
 package refactoringLabs;
 
+import refactoringLabs.contract.ContractFactory;
+import refactoringLabs.input.Input;
+import refactoringLabs.output.Output;
+
 import java.util.Optional;
 
 public class TaxCalculator {

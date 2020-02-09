@@ -1,4 +1,6 @@
-package refactoringLabs;
+package refactoringLabs.input;
+
+import refactoringLabs.contract.ContractType;
 
 import java.util.Scanner;
 

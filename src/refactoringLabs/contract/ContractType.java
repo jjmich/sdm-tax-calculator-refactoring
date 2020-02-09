@@ -1,4 +1,4 @@
-package refactoringLabs;
+package refactoringLabs.contract;
 
 public enum ContractType {
 	ORDINARY, CIVIL;

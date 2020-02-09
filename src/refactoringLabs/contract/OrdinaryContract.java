@@ -1,4 +1,4 @@
-package refactoringLabs;
+package refactoringLabs.contract;
 
 public class OrdinaryContract extends Contract {
 
@@ -8,7 +8,7 @@ public class OrdinaryContract extends Contract {
     }
 
     @Override
-    protected Contract createSummary() {
+    public Contract createSummary() {
         contractType = "Ordinary";
         pensionTax = calculatePension(income);
         disabilityTax = calculateDisabled(income);
